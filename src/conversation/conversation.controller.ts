@@ -23,7 +23,6 @@ export class ConversationController {
 
   @Get()
   async getConversation(@Request() req, @Query('user') otherUser: string) {
-    console.log(req.user);
     const authenticatedUser = req.user.email;
     return this.conversationService.getConversation(
       authenticatedUser,

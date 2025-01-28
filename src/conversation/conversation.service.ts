@@ -50,8 +50,6 @@ export class ConversationService {
   async getConversation(authenticatedUser: string, otherUser: string) {
     const participants = [authenticatedUser, otherUser].sort();
 
-    console.log(participants);
-
     const conversation = await this.conversationModel
       .findOne({ participants })
       .exec();
