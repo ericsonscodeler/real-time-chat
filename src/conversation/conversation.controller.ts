@@ -1,4 +1,12 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  Request,
+  Query,
+} from '@nestjs/common';
 import { ConversationService } from './conversation.service';
 import { SendMessageDto } from './dto/send-message-dto';
 import { JwtAuthGuard } from 'src/config/auth/auth.config';
@@ -11,5 +19,15 @@ export class ConversationController {
   @Post('send-message')
   async sendMessage(@Body() sendMessageDto: SendMessageDto) {
     return this.conversationService.sendMessage(sendMessageDto);
+  }
+
+  @Get()
+  async getConversation(@Request() req, @Query('user') otherUser: string) {
+    console.log(req.user);
+    const authenticatedUser = req.user.email;
+    return this.conversationService.getConversation(
+      authenticatedUser,
+      otherUser,
+    );
   }
 }
